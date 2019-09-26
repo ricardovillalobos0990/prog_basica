@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Hola estamos tirando rimas </title>
+    </head>
+    <body>
+        <h1> Vamos a realizar la operacion MARTE</h1>
+        <p> Este solo es un subtitulo pequeño </p>
+        <script>
+        var usuario = prompt("Cual es su peso: ");
+        var planeta = parseInt(prompt("Elija el planeta\n1: Es Marte, \n2: Es Jupyter"))
+        var peso = parseInt(usuario);
+        var g_tierra = 9.8;
+        var g_marte = 3.7;
+        var g_jupyter = 24.8;
+        var peso_final;
+        if(planeta == 1)
+        {
+            peso_final = peso * g_marte / g_tierra;
+        }
+        peso_final = parseInt(peso_final);
+        document.write("Tu peso en Marte es <strong>" + peso_final + " Kilos</strong>");
+        </script>
+    </body>
+</html>
