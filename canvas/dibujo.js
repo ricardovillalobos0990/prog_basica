@@ -30,8 +30,8 @@ function dibujoPorClick(){
 
     dibujarLinea("red", 1, 1, 1, 299);
     dibujarLinea("red", 1, 299, 299, 299);
-    //dibujarLinea("red", 1, 1, 299,1);
-    //dibujarLinea("red", 299, 1, 299, 299);
+    dibujarLinea("red", 1, 1, 299,1);
+    dibujarLinea("red", 299, 1, 299, 299);
 }
 
 /*
