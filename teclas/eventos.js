@@ -46,3 +46,8 @@ switch(evento.keyCode){
         console.log(evento);
     }
 }
+
+dibujarLinea("red", 1, 1, 1, 299, lienzo);
+dibujarLinea("red", 1, 299, 299, 299, lienzo);
+dibujarLinea("red", 1, 1, 299,1, lienzo);
+dibujarLinea("red", 299, 1, 299, 299, lienzo);

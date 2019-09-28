@@ -1,3 +1,4 @@
+document.addEventListener("load", dibujarLinea);
 document.addEventListener("mousedown", dibujarMouse);
 document.addEventListener("mousemove", dibujarMouse);
 
@@ -27,3 +28,8 @@ function dibujarMouse(click){
         console.log(click);
     }
 }
+    
+dibujarLinea("red", 1, 1, 1, 299, papel);    
+dibujarLinea("red", 1, 299, 299, 299, papel);    
+dibujarLinea("red", 1, 1, 299,1, papel);  
+dibujarLinea("red", 299, 1, 299, 299, papel);
