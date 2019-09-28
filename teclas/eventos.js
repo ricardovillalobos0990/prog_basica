@@ -1,36 +1,48 @@
 var teclas = {LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40};
-
-
-document.addEventListener("keyup", dibujarTeclado);
 var cuadrito = document.getElementById("papelito");
 var papel = cuadrito.getContext("2d");
+var x = 90;
+var y = 90;
 
-dibujarLinea("red", 100, 100, 200, 200, papel);
+document.addEventListener("keydown", dibujarTeclado);
+document.addEventListener("mousedown", dibujarTeclado);
+document.addEventListener("mousemove", dibujarTeclado);
 
-function dibujarLinea(color, x_inicial, y_incial, x_final, lienzo){
+dibujarLinea("red", x-1, y-1, x+1, y+1, papel);
+
+function dibujarLinea(color, x_inicial, y_incial, x_final, y_final, lienzo){
     lienzo.beginPath();
     lienzo.strokeStyle = color;
+    lienzo.lineWidth = 3;
     lienzo.moveTo(x_inicial, y_incial);
     lienzo.lineTo(x_final, y_final);
     lienzo.stroke();
-    lienzo.closePath();
+    lienzo.closePath(); 
 }
 
 function dibujarTeclado(evento){
+    colorlinea = "blue";
+    movimiento = 10;
+    
 switch(evento.keyCode){
     case teclas.LEFT:
-        console.log("IZQUIERDA");
+        dibujarLinea(colorlinea, x, y, x - movimiento, y, papel);
+        x = x - 10;
     break;
     case teclas.UP:
-        console.log("ARRIBA");
+        dibujarLinea(colorlinea, x, y, x, y - movimiento, papel);
+        y = y - 10;
     break;
     case teclas.RIGHT:
-        console.log("DERECHA");
+        dibujarLinea(colorlinea, x, y, x + movimiento, y, papel);
+        x = x + 10;
     break;
     case teclas.DOWN:
-        console.log("ABAJO");
+        dibujarLinea(colorlinea, x, y, x, y + movimiento, papel);
+        y = y + 10;
+        console.log(y);
     break;
     default:
-        console.log("Otra tecla");
+        console.log(evento);
     }
 }
