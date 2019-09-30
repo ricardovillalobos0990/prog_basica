@@ -1,7 +1,7 @@
 class Pakiman{
     constructor(n, v, a){
-
         this.imagen = new Image();
+
         this.nombre = n;
         this.ataque = a;
         this.vida = v;
