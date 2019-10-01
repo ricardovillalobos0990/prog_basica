@@ -47,3 +47,35 @@ var papeles = 0;
 var resultado = document.getElementById("resultado");
 var b = document.getElementById("extraer");
 b.addEventListener("click", entregarDinero);
+
+var entrar = 0;
+var altura = 101;
+if( altura > 100 || altura < 50){
+    entrar = 1;
+}
+else if(altura > 60 || altura < 40){
+    entrar = 2;
+}
+console.log(entrar);
+
+var contador = 2;
+var na = "na";
+while(contador)
+{
+    na += na;
+    contador -= 1;
+}
+console.log(na + " Freddy ")
+
+function declarar() {
+    variable = 12; 
+ }
+ declarar();
+ console.log(variable);
+
+ var paki = {
+    nombre: "Pakiman",
+    ataque: 101
+};
+paki.ataque = paki.ataque * 2;
+console.log(paki.ataque);
