@@ -21,12 +21,14 @@ function entregarDinero(){
             entregado.push(new Billete(bi.valor, papeles));
             dinero = dinero - (bi.valor * papeles);
         }
+        resultado.innerHTML = ("Escriba valores positivos MENSO");
     }
 
     if(dinero > 0){
         resultado.innerHTML = ("No tengo dinero");
+        console.log(dinero);
     }else{
-        for( var e of entregado){
+        for(var e of entregado){
             if(e.cantidad > 0){
                 resultado.innerHTML += e.cantidad + " Billetes con valor $ " + e.valor + "<br />";
             }
@@ -57,25 +59,3 @@ else if(altura > 60 || altura < 40){
     entrar = 2;
 }
 console.log(entrar);
-
-var contador = 2;
-var na = "na";
-while(contador)
-{
-    na += na;
-    contador -= 1;
-}
-console.log(na + " Freddy ")
-
-function declarar() {
-    variable = 12; 
- }
- declarar();
- console.log(variable);
-
- var paki = {
-    nombre: "Pakiman",
-    ataque: 101
-};
-paki.ataque = paki.ataque * 2;
-console.log(paki.ataque);

@@ -1,0 +1,5 @@
+Perceptron
+Redes neuronales simple
+Redes neuronales Multiple
+
+Proyecto con arduino + Logica Difusa
