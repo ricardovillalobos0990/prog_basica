@@ -3,9 +3,8 @@ from numpy import exp, array, random, dot
 class RedNeuronal():
     def __init__(self):
         self.pesos_signaticos = 2 * random.random((3, 1)) - 1
-        print(self.pesos_signaticos)
 
-    def __sigmoide(x):
+    def __sigmoide(self, x):
         return 1 / (1 + exp(-x))
 
     def __sigmoide_derivado(self, x):
@@ -22,13 +21,10 @@ class RedNeuronal():
         return self.__sigmoide(dot(entradas, self.pesos_signaticos))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     red_neuronal = RedNeuronal()
     entradas = array([[0,0,1], [1,1,1], [1,0,1], [0,1,1]])
     salidas = array([[0,1,1,0]]).T
     red_neuronal.entrenamiento(entradas, salidas, 1000)
     print(red_neuronal.pesos_signaticos)
     print(red_neuronal.pensar(array([1,0,0])))
-
-red = RedNeuronal()
-print(red)
