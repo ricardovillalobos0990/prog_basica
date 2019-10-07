@@ -1,18 +1,22 @@
 from tkinter import ttk, messagebox
 from tkinter import *
 from random import choice
-from numpy import array, dot, random
+from numpy import exp, array, dot, random
 import matplotlib.pyplot as plt
+import neuronaSim
+import neuronaMul
 
-
-class RedesNeuronales:
-    def __init__(self):
-        #  initializations
-
+class Perceptron():
+    def __init__(self, window):
+        #  initialization
+        #simple = clave.RedNeuronalSimple()
+        simple = neuronaSim.RedNeuronalSimple()
+        multi = neuronaMul.RedNeuronalMultiple()
+        
         self.wind = window
         self.wind.title(" Inteligencia Artificial")
         self.wind.geometry("450x200")
-        #DENTRO DE LA VENTANA QUE ES = WIND SE AGREGA "add" los Tabs y
+        # Dentro de self.wind se agrega llama a la funcion Notebook la cual se guarda en pestaña "eyelash"
         self.eyelash = ttk.Notebook(self.wind)
         self.eyelash.pack(fill='both',expand='yes')
 
@@ -30,24 +34,33 @@ class RedesNeuronales:
         self.perEntradaN = Entry(self.eyelash0)
         self.perEntradaN.grid(row=2, column=1, sticky=W + E)
 
+
         # Se crea la pestasña Red Neuronal Simple
         self.eyelash1 = ttk.Frame(self.eyelash)
         self.eyelash.add( self.eyelash1, text="Red Neuronal Simple" )
+        # La etiqueta va dentro de pestaña para que se ingrese el valor
         self.textEyelash1 = Label( self.eyelash1, text="Indique la Cantidad de Iteracciones")
         self.textEyelash1.grid(row=1, column=0, columnspan=2, sticky=W+E)
-
-        # El boton para indicar la cantidad de N
-        self.buttonRedNeuSim = ttk.Button( self.eyelash1, text="LA CANTIDAD DE ITERACCIONES" )
-        self.buttonRedNeuSim.grid(row=2, column=0, sticky=W + E )
+        # El boton para indicar la cantidad de Iteracciones
+        self.buttonRedNeuSimple = ttk.Button( self.eyelash1, text="LA CANTIDAD DE ITERACCIONES", command=simple.showRedSimple)
+        self.buttonRedNeuSimple.grid(row=2, column=0, sticky=W + E )
         # Al lado del Boton el usuario ingresa el valor
-        self.EntradaRedNeuSim = Entry(self.eyelash1)
-        self.EntradaRedNeuSim.grid(row=2, column=1, sticky=W + E)
+        self.EntradaRedNeuSimple = Entry(self.eyelash1)
+        self.EntradaRedNeuSimple.grid(row=2, column=1, sticky=W + E)
 
+        multi.
+        # Se crea la pestasña Red Neuronal Multiple
+        self.eyelash2 = ttk.Frame(self.eyelash)
+        self.eyelash.add(self.eyelash2, text="Red Neuronal Multiple" )
+        self.textEyelash2 = Label(self.eyelash2, text="Indique la Cantidad de ALgo")
+        self.textEyelash2.grid(row=1, column=0, columnspan=2, sticky=W+E)
+        # El boton para indicar la cantidad de No se que
+        self.buttonRedNeuMul = ttk.Button( self.eyelash2, text="LA CANTIDAD DE ALGO")
+        self.buttonRedNeuMul.grid(row=2, column=0, sticky=W + E )
+        # Al lado del Boton el usuario ingresa el valor
+        self.EntradaRedNeuMul = Entry(self.eyelash2)
+        self.EntradaRedNeuMul.grid(row=2, column=1, sticky=W + E)
 
-
-        self.pest2 = ttk.Frame(self.eyelash)
-        self.eyelash.add( self.pest2, text="Red Neuronal Multiple Capa" )
-        self.texto3 = Label( self.pest2, text="Pestaña 2" ).pack()
 
         # Output Messages
         self.message = Label( self.eyelash0, text='', fg='red' )
@@ -85,11 +98,12 @@ class RedesNeuronales:
             # Ajuste
             w += bahias * error * x
 
+        cadena0 = ''
         for x, _ in entrenamiento:
             resultado = dot( w, x )
-            print( "{}: {} -> {}".format( x[:3], resultado, activacion( resultado ) ) )
-            self.message['text'] = f"{x[:3]}: {resultado} -> {activacion( resultado )}"
-            self.message.grid( row=3, column=0, columnspan=2, sticky=W + E )
+            cadena0 += f"{x[:3]}: {resultado} -> {activacion( resultado )} \n"
+        self.message['text'] = cadena0
+        self.message.grid( row=3, column=0, columnspan=2, sticky=W + E )
 
         plt.plot( errores, '-', color='red' )
         plt.plot( esperados, '*', color='green' )
@@ -101,38 +115,7 @@ class RedesNeuronales:
         plt.show()
 
 
-class RedNeuronalSimple(RedesNeuronales):
-    clave = RedesNeuronales()
-    def __sigmoide(self, x):
-        return 1 / (1 + exp(-x))
-
-
-    def __sigmoide_derivado(self, x):
-        return x * (1 - x)
-
-
-    def entrenamiento(self, entradas, salidas, numero_iteraciones):
-        for i in range(numero_iteraciones):
-            salida = self.pensar(entradas)
-            error = salidas - salida
-            ajuste = dot(entradas.T, error * self.__sigmoide_derivado(salida))
-            self.pesos_signaticos += ajuste
-
-
-    def pensar(self, entradas):
-        return self.__sigmoide(dot(entradas, self.pesos_signaticos))
-
-    def showRedNeuronalSimple(self):
-        entradas = array( [[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]] )
-        salidas = array( [[0, 1, 1, 0]] ).T
-        print(self.pesos_signaticos)
-        #entrenamiento(entradas, salidas, 1000)
-        #print( self.pesos_signaticos )
-        #print( self.pensar( array( [1, 0, 0] ) ) )
-
-
 if __name__ == "__main__":
     window = Tk()
-    application = RedesNeuronales()
-    application.wind
+    application = Perceptron(window)
     window.mainloop()

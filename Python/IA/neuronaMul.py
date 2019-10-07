@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def sigmoide(x):
     return 1 / (1 + np.exp( -x ))
 
@@ -17,7 +16,7 @@ def tangente_derivada(x):
     return 1 - x ** 2
 
 
-class RedNeuronal():
+class RedNeuronalMultiple():
     def __init__(self, capas, activacion='tangente'):
         if activacion == 'sigmoide':
             self.activacion = sigmoide
@@ -68,7 +67,7 @@ class RedNeuronal():
                 capa = np.atleast_2d( a[i] )
                 delta = np.atleast_2d( deltas[i] )
                 self.pesos[i] += factor_aprendizaje * capa.T.dot( delta )
-
+        
             if k % 10000 == 0: print( 'epocas:', k )
 
     def predecir(self, x):
@@ -87,7 +86,7 @@ class RedNeuronal():
         return self.deltas
 
 
-nn = RedNeuronal([2,3,2], activacion='tangente')
+nn = RedNeuronalMultiple([2,3,2], activacion='tangente')
 X = np.array([[0, 0], # sin obstaculos
              [0,1], # sin obstaculos
              [0, -1], # sin obstaculos
@@ -103,7 +102,7 @@ y = np.array([[0, 1], #avanzar
               [1, 1], #giro derecha
               [0, -1], #retroceder
               [0, -1],]) #retroceder
-nn.ajuste(X, y, factor_aprendizaje = 0.03, epocas = 150000)
+nn.ajuste(X, y, factor_aprendizaje = 0.03, epocas = 10000)
 
 index = 0
 for e in X:

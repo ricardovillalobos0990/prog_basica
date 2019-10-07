@@ -1,9 +1,12 @@
-from numpy import exp, array, random, dot
+from random import choice
+from numpy import exp, array, dot, random
+#import neuronaPerce
 
-class RedNeuronal():
+class RedNeuronalSimple():
+
     def __init__(self):
         self.pesos_signaticos = 2 * random.random((3, 1)) - 1
-
+        
     def __sigmoide(self, x):
         return 1 / (1 + exp(-x))
 
@@ -20,11 +23,13 @@ class RedNeuronal():
     def pensar(self, entradas):
         return self.__sigmoide(dot(entradas, self.pesos_signaticos))
 
-
-if __name__ == '__main__':
-    red_neuronal = RedNeuronal()
-    entradas = array([[0,0,1], [1,1,1], [1,0,1], [0,1,1]])
-    salidas = array([[0,1,1,0]]).T
-    red_neuronal.entrenamiento(entradas, salidas, 1000)
-    print(red_neuronal.pesos_signaticos)
-    print(red_neuronal.pensar(array([1,0,0])))
+    
+    def showRedSimple(self):
+        entradas = array( [[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]] )
+        salidas = array( [[0, 1, 1, 0]] ).T
+        self.entrenamiento( entradas, salidas, 1000 )
+        print( self.pesos_signaticos )
+        print( self .pensar( array( [1, 0, 0] ) ) )
+        #clave = neuronaPerce.Perceptron()
+        #neuronaPerce.Perceptron.message["text"] = "Hola"
+        #Perceptron.message["text"]="HOLA"
