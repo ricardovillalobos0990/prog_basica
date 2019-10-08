@@ -3,15 +3,16 @@ from tkinter import *
 from random import choice
 from numpy import exp, array, dot, random
 import matplotlib.pyplot as plt
-import neuronaSim
-import neuronaMul
+#import neuronaMul
+from neuronaSim import RedNeuronalSimple
 
 class Perceptron():
     def __init__(self, window):
         #  initialization
         #simple = clave.RedNeuronalSimple()
-        simple = neuronaSim.RedNeuronalSimple()
-        multi = neuronaMul.RedNeuronalMultiple()
+        #simple = neuronaSim.RedNeuronalSimple()
+        simple = RedNeuronalSimple()
+        #multi = neuronaMul.RedNeuronalMultiple()
         
         self.wind = window
         self.wind.title(" Inteligencia Artificial")
@@ -39,16 +40,17 @@ class Perceptron():
         self.eyelash1 = ttk.Frame(self.eyelash)
         self.eyelash.add( self.eyelash1, text="Red Neuronal Simple" )
         # La etiqueta va dentro de pestaña para que se ingrese el valor
-        self.textEyelash1 = Label( self.eyelash1, text="Indique la Cantidad de Iteracciones")
+        self.textEyelash1 = Label( self.eyelash1, text="Indique la Cantidad de Iteracciones", command=simple.showRedSimple)
         self.textEyelash1.grid(row=1, column=0, columnspan=2, sticky=W+E)
         # El boton para indicar la cantidad de Iteracciones
-        self.buttonRedNeuSimple = ttk.Button( self.eyelash1, text="LA CANTIDAD DE ITERACCIONES", command=simple.showRedSimple)
+        self.buttonRedNeuSimple = ttk.Button( self.eyelash1, text="LA CANTIDAD DE ITERACCIONES")
         self.buttonRedNeuSimple.grid(row=2, column=0, sticky=W + E )
         # Al lado del Boton el usuario ingresa el valor
         self.EntradaRedNeuSimple = Entry(self.eyelash1)
         self.EntradaRedNeuSimple.grid(row=2, column=1, sticky=W + E)
 
-        multi.
+
+
         # Se crea la pestasña Red Neuronal Multiple
         self.eyelash2 = ttk.Frame(self.eyelash)
         self.eyelash.add(self.eyelash2, text="Red Neuronal Multiple" )
