@@ -9,10 +9,11 @@ class RedesNeuronales:
 
     def __init__(self):
         self.ventana = Tk()
-        self.ventana.title("Hola Mundo")
+        self.ventana.title("Redes Neuronales")
         self.ventana.geometry("600x500")
         self.notebook = ttk.Notebook(self.ventana)
         self.notebook.pack(fill='both',expand='yes')
+        #self.ventana.minsize("600x500")
         self.entradas = {}
         self.salidas = {}
         self.bahias = {}
@@ -53,7 +54,7 @@ class RedesNeuronales:
         nombreEntrenamiento = Entry(self.instances.get(instancia),textvariable=self.entrenamiento[instancia]).place(x=180,y=50 + (i+3) * 20)
 
         self.activacion[instancia] = StringVar()
-        opciones = ttk.Combobox(self.instances.get(instancia),values=("Sigmoide","Tangente"),textvariable=self.activacion[instancia]).place(x=10, y=50 + (i+5) * 20)
+        opciones = ttk.Combobox(self.instances.get(instancia),values=("sigmoide","tangente"),textvariable=self.activacion[instancia]).place(x=10, y=50 + (i+5) * 20)
 
         self.ob[instancia] = Ob
         boton1 = Button(self.instances.get(instancia),text="Entrenar",fg="green", command=lambda: self.callNeurona(instancia)).pack(padx=30, pady=50 + (i+6) * 20)
@@ -64,32 +65,19 @@ class RedesNeuronales:
         salidas = []
 
         for i in range(total):
-            entradas.append([int(x) for x in self.entradas[instancia][i].get().split(sep=',')])
-            salida  = [int(x) for x in self.salidas[instancia][i].get().split(sep=',')]
+            entradas.append([float(x) for x in self.entradas[instancia][i].get().split(sep=',')])
+            salida  = [float(x) for x in self.salidas[instancia][i].get().split(sep=',')]
             if len(salida) == 1: 
-                salidas.append(int(salida[0])) 
+                salidas.append(float(salida[0]))
             else:
                  salidas.append(salida)
 
-        ob = self.ob[instancia](entradas, salidas, self.bahias[instancia].get(), self.entrenamiento[instancia].get())
+        ob = self.ob[instancia](entradas, salidas, self.bahias[instancia].get(), self.entrenamiento[instancia].get(), self.activacion[instancia].get())
         ob.entrenar()
-        ob.imprimirResultado()
+        cadena = ob.imprimirResultado()
+        message = Label( self.instances.get(instancia), text=cadena, fg='red' ).place(x=10 ,y= 300)
+        ob.generarGrafico()
 
-
-
-            
-
-            
-        # nombreEntrada = Entry(ventana,textvariable=nombre).place(x=110,y=10)
-
-        # etiqueta = Label(ventana,text="Ingrese Nombre: ").place(x=10,y=10)
-        # nombreEntrada = Entry(ventana,textvariable=nombre).place(x=110,y=10)
-
-        # etiqueta = Label(ventana,text="Ingrese Nombre: ").place(x=10,y=10)
-        # nombreEntrada = Entry(ventana,textvariable=nombre).place(x=110,y=10)
-
-        # etiqueta = Label(ventana,text="Ingrese Nombre: ").place(x=10,y=10)
-        # nombreEntrada = Entry(ventana,textvariable=nombre).place(x=110,y=10)
         
     def sostenerVentana(self):
         self.ventana.mainloop()

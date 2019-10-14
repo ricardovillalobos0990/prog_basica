@@ -2,11 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from FuncionesActivacion import FuncionesActivacion
 
-class RedNeuronalMulticapa():
-    def __init__(self, entradas, salidas, factor_aprendizaje, epocas, capas=[2,3,2], activacion='tangente'):
-        ob = FuncionesActivacion()
-        self.activacion = ob.sigmoide
-        self.activacion_prima = ob.sigmoide_derivado
+class RedNeuronalMulticapa(FuncionesActivacion):
+    def __init__(self, entradas, salidas, factor_aprendizaje, epocas,  activacion='tangente', capas=[2,3,2]):
+        #ob = FuncionesActivacion()
+        self.nombreactivacion = activacion
+        self.activacion = lambda : 0
+        self.activacion_prima = lambda : 0
         self.entradas = np.array(entradas)
         self.salidas = np.array(salidas)
         self.factor_aprendizaje = factor_aprendizaje
@@ -27,6 +28,7 @@ class RedNeuronalMulticapa():
     def entrenar(self):
         # print(self.entradas)
         # print(self.salidas)
+        self.validaractivacion()
         ones = np.atleast_2d(np.ones(self.entradas.shape[0]))
         self.entradas = np.concatenate((ones.T, self.entradas), axis = 1)
         
@@ -65,54 +67,36 @@ class RedNeuronalMulticapa():
         for l in range(0, len(self.pesos)):
             a = self.activacion(np.dot(a, self.pesos[l]))
         return a
-    
-    def imprimir_pesos(self):
-        print("Listado de Pesos de Conexiones")
-        for i in range(len(self.pesos)):
-            print(self.pesos[i])
-    
+
     def obtener_deltas(self):
         return self.deltas
-
-    def imprimirResultado(self):
-        self.imprimir_pesos()
-
-
-
-# nn = RedNeuronal([2,3,2], activacion='tangente')
-# X = np.array([[0, 0], # sin obstaculos
-#              [0,1], # sin obstaculos
-#              [0, -1], # sin obstaculos
-#              [0.5, 1], #obstaculo detectado a la derecha
-#              [0.5, -1], #obstaculo a izquierdad
-#              [1, 1], # demasiado cerca a la derecha
-#              [1, -1]]) # demasiado cerca a la izquierda
-
-# y = np.array([[0, 1], #avanzar
-#               [0, 1], #avanzar
-#               [0, 1], #avanzar
-#               [-1, 1], #giro izquierda
-#               [1, 1], #giro derecha
-#               [0, -1], #retroceder
-#               [0, -1],]) #retroceder
-# nn.ajuste(X, y, factor_aprendizaje = 0.03, epocas = 150000)
-
-# index = 0
-# for e in X:
-#     print("X: ", e, "y: ", y[index], "Red: ", nn.predecir(e))
-#     index = index + 1
-
-# deltas = nn.obtener_deltas()
-# valores = []
-# index = 0
-# for arreglo in deltas:
-#     valores.append(arreglo[1][0] + arreglo[1][1])
-#     index = index + 1
     
-# plt.plot(range(len(valores)), valores, color='b')
-# plt.ylim([0, 1])
-# plt.ylabel('Costo')
-# plt.xlabel('Epocas')
-# plt.tight_layout()
-# plt.show()
+    def imprimirResultado(self):
+        cadena = ""
+        print("Listado de Pesos de Conexiones")
+        for i in range(len(self.pesos)):
+            cadena += str(self.pesos[i]) + "\n"
+        return cadena
 
+    def generarGrafico(self):
+        deltas = self.obtener_deltas()
+        valores = []
+        index = 0
+        for arreglo in deltas:
+            valores.append( arreglo[1][0] + arreglo[1][1] )
+            index = index + 1
+
+        plt.plot( range( len( valores ) ), valores, color='b' )
+        plt.ylim( [0, 1] )
+        plt.ylabel( 'Costo' )
+        plt.xlabel( 'Epocas' )
+        plt.tight_layout()
+        plt.show()
+
+    def validaractivacion(self):
+        if self.nombreactivacion == 'sigmoide':
+            self.activacion = self.sigmoide
+            self.activacion_prima = self.sigmoide_derivado
+        elif self.nombreactivacion == 'tangente':
+            self.activacion = self.tangente
+            self.activacion_prima = self.tangente_derivada

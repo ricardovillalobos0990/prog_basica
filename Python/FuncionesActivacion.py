@@ -14,3 +14,5 @@ class FuncionesActivacion:
     def tangente_derivada(self, x):
         return 1 - x**2
 
+    def relu(self, x):
+        return 0 if x < 0  else 1
