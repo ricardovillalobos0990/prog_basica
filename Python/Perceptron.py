@@ -39,5 +39,5 @@ class Perceptron(FuncionesActivacion):
         plt.title("Perceptron")
         plt.plot(self.errores,'-',color='red', Label="Errores")
         plt.plot(self.esperados,'*', color='green', Label="Esperados")
-        plt.legend(loc="upper right")
+        plt.legend(loc="lower right")
         plt.show()

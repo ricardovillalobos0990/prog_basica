@@ -10,10 +10,10 @@ class RedesNeuronales:
     def __init__(self):
         self.ventana = Tk()
         self.ventana.title("Redes Neuronales")
-        self.ventana.geometry("600x500")
+        self.ventana.geometry("600x550")
         self.notebook = ttk.Notebook(self.ventana)
         self.notebook.pack(fill='both',expand='yes')
-        #self.ventana.minsize("600x500")
+        self.ventana.minsize(600, 550)
         self.entradas = {}
         self.salidas = {}
         self.bahias = {}
@@ -26,7 +26,8 @@ class RedesNeuronales:
         self.instances[instancia] = ttk.Frame(self.notebook)
         self.notebook.add( self.instances.get(instancia), text=title)
 
-    def interface(self, instancia, Ob):
+
+    def interface(self, instancia, entradas, descripcion, Ob):
         etiquetaEntradas = []
         etiquetaSalidas = []
         nombreEntradas = []
@@ -34,31 +35,37 @@ class RedesNeuronales:
         self.entradas[instancia] = []
         self.salidas[instancia] = []
 
-        etiquetaEntradas.append(Label(self.instances.get(instancia),text="Ingrese la misma cantidad de item para cada entrada, separados por coma y sin espacio. ").place(x=10 ,y=0))
+        Label(self.instances.get(instancia), text="Ingrese la misma cantidad de item para cada entrada, separados por coma y sin espacio", fg='blue' ).place(x=0 ,y=10)
+        Label(self.instances.get(instancia), text=descripcion.get("nombre")).place(x=10 ,y=60)
+        Label(self.instances.get(instancia), text=descripcion.get("entradas")).place(x=110 ,y=60)
+        Label(self.instances.get(instancia), text=descripcion.get("salidas")).place(x=380 ,y=60)
+
         i = 0
-        for i in range(4):
-            etiquetaEntradas.append(Label(self.instances.get(instancia),text="Entrada # " + str(i) + ' :').place(x=10 ,y=50 + i * 20))
+        for i in range(entradas):
+            etiquetaEntradas.append(Label(self.instances.get(instancia),text="Entrada # " + str(i) + ' :').place(x=10 ,y=100 + i * 20))
             self.entradas[instancia].append(StringVar())
-            nombreEntradas.append(Entry(self.instances.get(instancia), textvariable=self.entradas[instancia][i]).place(x=110,y=50+ i * 20))
+            nombreEntradas.append(Entry(self.instances.get(instancia), textvariable=self.entradas[instancia][i]).place(x=110,y=100+ i * 20))
 
             self.salidas[instancia].append(StringVar())
-            etiquetaSalidas.append(Label(self.instances.get(instancia),text="Salida # " + str(i) + ' :').place(x=300 ,y=50 + i * 20))
-            nombreSalidas.append(Entry(self.instances.get(instancia), textvariable=self.salidas[instancia][i]).place(x=380,y=50 + i * 20))
+            etiquetaSalidas.append(Label(self.instances.get(instancia),text="Salida # " + str(i) + ' :').place(x=300 ,y=100 + i * 20))
+            nombreSalidas.append(Entry(self.instances.get(instancia), textvariable=self.salidas[instancia][i]).place(x=380,y=100 + i * 20))
 
-        etiquetaBahias = Label(self.instances.get(instancia),text="Ingrese el sesgo de bahias").place(x=10 ,y=50 + (i+2) * 20)
+        etiquetaBahias = Label(self.instances.get(instancia),text="Ingrese el sesgo de bahias").place(x=10 ,y=100 + (i+2) * 20)
         self.bahias[instancia] = DoubleVar()
-        nombreBahias = Entry(self.instances.get(instancia),textvariable=self.bahias[instancia]).place(x=180,y=50 + (i+2) * 20)
+        nombreBahias = Entry(self.instances.get(instancia),textvariable=self.bahias[instancia]).place(x=200,y=100 + (i+2) * 20)
 
-        etiquetaEntrenamiento = Label(self.instances.get(instancia),text="Ingrese entrenamiento").place(x=10 ,y=50 + (i+3) * 20)
+        etiquetaEntrenamiento = Label(self.instances.get(instancia),text="Ingrese entrenamiento").place(x=10 ,y=100 + (i+3) * 20)
         self.entrenamiento[instancia] = IntVar()
-        nombreEntrenamiento = Entry(self.instances.get(instancia),textvariable=self.entrenamiento[instancia]).place(x=180,y=50 + (i+3) * 20)
+        nombreEntrenamiento = Entry(self.instances.get(instancia),textvariable=self.entrenamiento[instancia]).place(x=200,y=100 + (i+3) * 20)
 
         self.activacion[instancia] = StringVar()
-        opciones = ttk.Combobox(self.instances.get(instancia),values=("sigmoide","tangente"),textvariable=self.activacion[instancia]).place(x=10, y=50 + (i+5) * 20)
 
+        etiquetaFuncionActivacion = Label(self.instances.get(instancia),text="Seleccione la Funcion").place(x=10 ,y=100 + (i+4) * 20)
+        botonFuncion = ttk.Combobox(self.instances.get(instancia),values=("sigmoide","tangente"),textvariable=self.activacion[instancia]).place(x=200,y=100 + (i+4) * 20)
+
+        botonEntrenar = Button(self.instances.get(instancia),text="Entrenar",fg="black", bg="white", command=lambda: self.callNeurona(instancia)).place(x=0 ,y=100 + (i+7) * 20, height=40, width=550)
         self.ob[instancia] = Ob
-        boton1 = Button(self.instances.get(instancia),text="Entrenar",fg="green", command=lambda: self.callNeurona(instancia)).pack(padx=30, pady=50 + (i+6) * 20)
-    
+
     def callNeurona(self, instancia):
         total = len(self.entradas[instancia])
         entradas = []
@@ -73,21 +80,27 @@ class RedesNeuronales:
                  salidas.append(salida)
 
         ob = self.ob[instancia](entradas, salidas, self.bahias[instancia].get(), self.entrenamiento[instancia].get(), self.activacion[instancia].get())
+        #INICIA EL TIEMPO
         ob.entrenar()
+        #FINALIZA EL TIEMPO
         cadena = ob.imprimirResultado()
-        message = Label( self.instances.get(instancia), text=cadena, fg='red' ).place(x=10 ,y= 300)
+        result = Label(self.instances.get(instancia), text="RESULTADO", fg="red").place(x=0 ,y=100 + (i+9) * 20)
+        message = Label( self.instances.get(instancia), text=cadena, fg='red' ).place(x=0 ,y=100 + (i+10) * 20)
         ob.generarGrafico()
 
         
     def sostenerVentana(self):
         self.ventana.mainloop()
-    
+
+per = {'nombre':'Perceptron' , "entradas" : "0,0,1" , "salidas" : " 1 "  }
+redsim = {'nombre':'Red Simple' , "entradas" : "1,1,1" , "salidas" : " 1 "  }
+redmul = {'nombre':'Red Multiple' , "entradas" : "0,1" , "salidas" : " 1,0 "  }
 
 ob = RedesNeuronales()
 ob.createFrame('red', 'Perceptrón')
 ob.createFrame('red2', 'Red neuronal simple')
 ob.createFrame('red3', 'Red neuronal multicapa')
-ob.interface('red', Perceptron)
-ob.interface('red2', RedNeuronalSimple)
-ob.interface('red3', RedNeuronalMulticapa)
+ob.interface('red', 4, per, Perceptron)
+ob.interface('red2', 4, redsim, RedNeuronalSimple)
+ob.interface('red3', 8, redmul, RedNeuronalMulticapa)
 ob.sostenerVentana()
