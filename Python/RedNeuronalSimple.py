@@ -27,8 +27,10 @@ class RedNeuronalSimple(FuncionesActivacion):
     def pensar(self, entrada):
         return self.activacion(dot(entrada, self.pesos_signaticos))
 
+    """
     def imprimirResultado(self):
         return "Hola"
+    """
 
     def validaractivacion(self):
         if self.nombreactivacion == 'sigmoide':
@@ -44,12 +46,3 @@ class RedNeuronalSimple(FuncionesActivacion):
         plt.plot([9,8,7,6,5], '*', color='green', Label="Esperados")
         plt.legend(loc="upper right")
         plt.show()
-
-
-# if __name__ == '__main__':
-#     red_neuronal = RedNeuronal()
-#     entradas = array([[0,0,1], [1,1,1], [1,0,1], [0,1,1]])
-#     salidas = array([[0,1,1,0]]).T
-#     red_neuronal.entrenamiento(entradas,salidas,1000)
-#     print(red_neuronal.pesos_signaticos)
-#     print(red_neuronal.pensar(array([1,0,0])))

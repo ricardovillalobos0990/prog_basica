@@ -32,7 +32,6 @@ class Perceptron(FuncionesActivacion):
         for x, _ in self.entrenamiento:
             resultado = dot(self.w, x)
             cadena += f"{x[:3]}: {resultado} -> {self.relu(resultado)} \n"
-
         return cadena
 
     def generarGrafico(self):
