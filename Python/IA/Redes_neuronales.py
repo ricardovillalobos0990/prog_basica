@@ -101,7 +101,7 @@ class RedesNeuronales:
 
         Label(self.instances.get(instancia), text="RESULTADO", fg="red").place(x=0 ,y=100 + (i+9) * 20)
         Label( self.instances.get(instancia), text=cadena, fg='red' ).place(x=0 ,y=100 + (i+10) * 20)
-        Label( self.instances.get( instancia ), text="El tiempo que se tardo fue de: " + str(tiempo) + " Segundos", fg='red' ).place( x=0, y=100 + (i + 18) * 20 )
+        Label( self.instances.get( instancia ), text="El tiempo que se tardo fue de: " + str(tiempo) + " Segundos", fg='red' ).place( x=0, y=100 + (i + 17) * 20 )
 
         ob.generarGrafico()
 
