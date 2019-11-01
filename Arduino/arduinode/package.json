@@ -1,0 +1,12 @@
+{
+  "name": "arduinode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "leds.js",
+  "scripts": {
+    "firmata": "firmata-party uno --debug"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

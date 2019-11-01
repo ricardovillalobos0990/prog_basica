@@ -1,0 +1,45 @@
+:root {
+    --color-title: red;
+    --color-subtitle: blue;
+}
+.title-1 {
+    color: var(--color-title);
+}
+
+.title-2 {
+    color: var(--color-subtitle);
+}
+
+.title-1 + .subtitle {
+    color: brown;
+}
+
+/*
+Selectores agrupados
+Descendientes .lista .tag
+
+Hijo Directo
+
+li > ul > li
+Todo hijo de li y todo hijo de ul
+
+Hermano Siguiente justo despues de otro
+.title-1 + .subtitle 
+
+Hermanos Siguientes busca a todos
+check:checked ~ .enabled {
+}
+
+Selector de atributo
+[type="email"]
+[required]
+
+Comienza con ^
+[href^="/"]
+
+Termina con $
+[href$=".pdf"]
+
+Contiene *
+[class*="button-"]
+*/
